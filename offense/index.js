@@ -18,7 +18,10 @@ exports.playOffense = function (offTeam, defTeam) {
                         break;
                     case shotEnum.REBOUND:
                         offenseRunning = true;
-                        //TODO set who have the puck
+                        puckCarrier = process.processRebound(offTeam, defTeam);
+                        if (!puckCarrier) {
+                            return offenseEnum.COUNTER;
+                        }
                         break;
                     case shotEnum.SAVE:
                         return offenseEnum.FACEOFF;

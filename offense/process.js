@@ -8,7 +8,7 @@ var utils = require('../utils'),
 var getShotResult = function(player, keeper) {
     var shotLocation = utils.randInt(0, 2);
 
-    if(player[0] * utils.randDec(1,1.3) > keeper[shotLocation] * utils.randDec(1.3,2.2)) {
+    if(player[0] * utils.randDec(1,1.3) > keeper[shotLocation] * utils.randDec(1.3,2.8)) {
         return shotEnum.GOAL;
     } else {
 
@@ -21,9 +21,21 @@ var getShotResult = function(player, keeper) {
     }
 }
 
+var getTeamStatAvg = function (team, statsIdx) {
+
+    var sum = 0;
+
+    for (var i = 0; i < team.length - 1; i++) {
+        var defender = team[i];
+        sum += defender[statsIdx];
+    }
+
+    return sum / (team.length - 1);
+}
+
 exports.getEvent = function (player) {
 
-    var max = player[0] * utils.randDec(1,1.6);
+    var max = player[0] * utils.randDec(1,1.4);
     var maxIndex = 0;
 
     for (var i = 1; i < 3; i++) {
@@ -43,17 +55,9 @@ exports.processShot = function(player, keeper) {
 }
 
 exports.processPass = function(player, defTeam) {
-    var posAvg,
-        posSum = 0;
+    var posAvg = getTeamStatAvg(defTeam, 5);
 
-    for (var i = 0; i < defTeam.length - 1; i++) {
-        var defender = defTeam[i];
-        posSum += defender[5];
-    }
-
-    posAvg = posSum / (defTeam.length - 1);
-
-    return (player[5] * utils.randDec(1,2) > posAvg * utils.randDec(1,1.4));
+    return (player[5] * utils.randDec(1,5) > posAvg * utils.randDec(1,4));
 }
 
 exports.processMove = function(player, defTeam) {
@@ -67,7 +71,7 @@ exports.processMove = function(player, defTeam) {
     }
     avg = sum / (defTeam.length - 1);
 
-    return (playerSum * utils.randDec(1,2) > avg * utils.randDec(1,1.7));
+    return (playerSum * utils.randDec(1,6) > avg * utils.randDec(1,4.5));
 }
 
 exports.getNewPuckCarrier = function(team, currentIdx) {
@@ -80,4 +84,15 @@ exports.getNewPuckCarrier = function(team, currentIdx) {
         "index": playerIdx,
         "player": team[playerIdx]
     };
+}
+
+exports.processRebound = function (offTeam, defTeam) {
+    var posDefAvg = getTeamStatAvg(defTeam, 5),
+        chkOffAvf = getTeamStatAvg(offTeam, 4);
+
+    if (chkOffAvf * utils.randDec(1,1.4) > posDefAvg * utils.randDec(1,1.6)) {
+        return self.getNewPuckCarrier(offTeam);
+    } else {
+        return null;
+    }
 }

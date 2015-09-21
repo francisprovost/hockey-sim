@@ -2,7 +2,7 @@ var offense = require("./offense"),
     offenseEnum = require('./utils/enum').offense
     stats = require('./stats')
     faceoff = require('./faceoff');
-var homeTeam = [
+var awayTeam = [
     [98,91,91,76,77,78,91,94,73,68,76,84,93,77,82],//off
     [82,76,74,72,76,93,70,71,74,75,59,69,77,80,75],//off
     [95,75,76,77,78,93,90,91,76,67,78,78,82,82,81],//off
@@ -10,7 +10,7 @@ var homeTeam = [
     [72,77,75,76,77,66,78,78,85,48,64,69,74,73,73],//def
     [79,78,79,79,79,78,79,73,81,79,65,79,78,78,78]//keeper
 ],
-awayTeam =[
+homeTeam = [
     [94,75,81,81,81,77,77,97,86,81,87,69,83,79,82],//off
     [99,84,87,73,97,75,86,77,74,69,68,71,90,81,79],//off
     [90,78,79,79,74,80,79,69,72,82,74,73,82,77,78],//off
@@ -21,7 +21,7 @@ awayTeam =[
 homeTeamInOff = true;
 
 var loop = 0;
-while (loop <= 100) {
+while (loop <= 200) {
     var offenseResult;
     if(homeTeamInOff) {
         offenseResult = offense.playOffense(homeTeam, awayTeam);
@@ -36,7 +36,7 @@ while (loop <= 100) {
         case offenseEnum.GOAL:
             stats.addGoal(homeTeamInOff);
         default:
-            homeTeamInOff = faceoff.process(homeTeam[0], awayTeam[0]);
+            homeTeamInOff = faceoff.process(homeTeam[2], awayTeam[0]);
     }
 
     loop++;
