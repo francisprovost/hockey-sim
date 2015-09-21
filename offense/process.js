@@ -1,8 +1,8 @@
 var utils = require('../utils'),
     self = require('./process'),
     stats = require('../stats'),
-    offenseEnum = require('../enum').offense,
-    shotEnum = require('../enum').shot;
+    offenseEnum = require('../utils/enum').offense,
+    shotEnum = require('../utils/enum').shot;
 
 
 var getShotResult = function(player, keeper) {

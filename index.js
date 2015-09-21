@@ -1,5 +1,5 @@
 var offense = require("./offense"),
-    offenseEnum = require('./enum').offense
+    offenseEnum = require('./utils/enum').offense
     stats = require('./stats')
     faceoff = require('./faceoff');
 var homeTeam = [
@@ -21,7 +21,7 @@ awayTeam =[
 homeTeamInOff = true;
 
 var loop = 0;
-while (loop <= 75) {
+while (loop <= 100) {
     var offenseResult;
     if(homeTeamInOff) {
         offenseResult = offense.playOffense(homeTeam, awayTeam);

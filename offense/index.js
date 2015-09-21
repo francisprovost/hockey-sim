@@ -1,6 +1,6 @@
 var process = require('./process'),
-    shotEnum = require('../enum').shot,
-    offenseEnum = require('../enum').offense;
+    shotEnum = require('../utils/enum').shot,
+    offenseEnum = require('../utils/enum').offense;
 
 exports.playOffense = function (offTeam, defTeam) {
     var offenseRunning = true;
