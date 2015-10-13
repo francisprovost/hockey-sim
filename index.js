@@ -1,6 +1,6 @@
 var offense = require("./offense"),
-    offenseEnum = require('./utils/enum').offense
-    stats = require('./stats')
+    offenseEnum = require('./utils/enum').offense,
+    statsEvent = require('./stats').getEvents(),
     faceoff = require('./faceoff'),
     roster = require('./rosters');
 
@@ -25,6 +25,8 @@ homeTeamInOff = true;
 awayTeam = roster.setMotivation(awayTeam);
 homeTeam = roster.setMotivation(homeTeam);
 
+
+
 var loop = 0;
 while (loop <= 200) {
     var offenseResult;
@@ -39,7 +41,7 @@ while (loop <= 200) {
             homeTeamInOff != homeTeamInOff;
             break;
         case offenseEnum.GOAL:
-            stats.addGoal(homeTeamInOff);
+            statsEvent.emit('goal', homeTeamInOff)
         default:
             homeTeamInOff = faceoff.process(homeTeam[2], awayTeam[0]);
     }
@@ -47,4 +49,4 @@ while (loop <= 200) {
     loop++;
 }
 
-console.log(stats.print());
+statsEvent.emit('printGame');

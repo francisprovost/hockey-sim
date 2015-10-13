@@ -1,6 +1,6 @@
 var utils = require('../utils'),
     self = require('./process'),
-    stats = require('../stats'),
+    stats = require('../stats').getEvents(),
     offenseEnum = require('../utils/enum').offense,
     shotEnum = require('../utils/enum').shot;
 
@@ -50,7 +50,7 @@ exports.getEvent = function (player) {
 }
 
 exports.processShot = function(player, keeper) {
-    stats.addShot();
+    stats.emit('shot');
     return getShotResult(player, keeper)
 }
 

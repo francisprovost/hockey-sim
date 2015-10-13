@@ -1,8 +1,14 @@
-var homeGoal = 0,
+var events = require('events');
+var eventEmitter;
+
+
+var currentgame,
+    homeGoal = 0,
     awayGoal = 0,
     shots = 0;
 
-exports.addGoal = function(isHomeGoal) {
+var addGoalEvent = function (isHomeGoal) {
+
     if (isHomeGoal) {
         homeGoal++;
     } else {
@@ -10,12 +16,40 @@ exports.addGoal = function(isHomeGoal) {
     }
 }
 
-exports.addShot = function () {
+var addShot = function () {
     shots++;
 }
 
-exports.print = function() {
-    return "HOME GOAL = " + homeGoal +
+var print = function() {
+    var str =  "HOME GOAL = " + homeGoal +
             "\nAWAY GOAL = " + awayGoal +
             "\nTotal shots = " + shots;
+
+    console.log(str);
+}
+
+var setListener = function () {
+
+    eventEmitter.on('goal', addGoalEvent);
+    eventEmitter.on('printGame', print);
+    eventEmitter.on('shot', addShot);
+}
+
+exports.getEvents = function () {
+    if(!eventEmitter) {
+        eventEmitter = new events.EventEmitter();
+        setListener();
+    }
+
+    return eventEmitter;
+}
+
+exports.getGame = function() {
+    //
+    // if (!currentgame)
+    // eventEmitter.on('goal', addGoalEvent);
+    // eventEmitter.on('printGame', print);
+    // eventEmitter.on('shot', addShot);
+    //
+    // return eventEmitter;
 }
